@@ -1,7 +1,40 @@
 const express = require('express')
 const app = express()
-app.all('/', (req, res) => {
-    console.log("Just got a request!")
-    res.send('Hello there I am new here')
+const mysql = require('mysql')
+
+// const connection = mysql.createConnection({
+//   host     : 'localhost',
+//   user     : 'rootadmin',
+//   password : 'fiejdl3#jfwjX',
+//   database : 'id20081623_firstdb',
+//   port: 3306
+// });
+ 
+// const SQL_STATEMENT = `INSERT INTO users (username, password) VALUES("?", "?")`
+
+// app.use(express.json())
+
+// connection.end();
+// app.post('/', function(req, res) {
+//     console.log(req.body)
+//     connection.connect();
+     
+//     connection.query(SQL_STATEMENT, [req.body.username, req.body.password], function (error, results, fields) {
+//       if (error) throw error;
+//       console.log(results);
+//     });
+     
+//     res.end()
+// })
+
+const users = [
+    {id: 1, username: 'yassi'},
+    {id: 2, username: 'berta'},
+    {id: 3, username: 'ywois'},
+]
+
+app.get('/users', function(req, res) {
+    res.json(users)
 })
-app.listen(process.env.PORT || 3000)
+
+app.listen(8000)
