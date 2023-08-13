@@ -37,4 +37,8 @@ app.get('/users', function(req, res) {
     res.json(users)
 })
 
+app.post('/users', function(req, res) {
+    res.json(users)
+})
+
 app.listen(process.env.PORT || 3000)
