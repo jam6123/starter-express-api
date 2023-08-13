@@ -37,4 +37,4 @@ app.get('/users', function(req, res) {
     res.json(users)
 })
 
-app.listen(8000)
+app.listen(process.env.PORT || 3000)
