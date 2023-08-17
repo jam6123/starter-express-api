@@ -7,6 +7,8 @@ const users = [
     {id: 3, username: 'ywois'},
 ]
 
+app.use(express.static('public'))
+
 app.get('/users', function(req, res) {
     res.json(users)
 })
