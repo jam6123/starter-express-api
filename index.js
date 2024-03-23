@@ -32,7 +32,7 @@ app.get('/users', async(req, res) => {
       const database = client.db("cyclic_users") // .command({ ping: 1 });
       const collection = database.collection('users')
 
-      const users = collection.find({})
+      const users = await collection.find()
       res.json(users)
     } finally {
       // Ensures that the client will close when you finish/error
