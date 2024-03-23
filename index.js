@@ -1,12 +1,12 @@
 require('dotenv').config()
-const express = require('express')
 const { MongoClient, ServerApiVersion} = require('mongodb')
-const uri = process.env.MONGODB_URI
+const express = require('express')
 const app = express()
 
 app.use(express.static('public'))
+
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
+const client = new MongoClient(process.env.MONGODB_URI, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
@@ -14,13 +14,16 @@ const client = new MongoClient(uri, {
   }
 });
 
-async function run() {
-  await client.connect();
-  app.listen(process.env.PORT || 3000)
-  console.log("You successfully connected to MongoDB!");
-}
-run().catch(console.dir);
-
+// connect to database
+(async function connectDb() {
+  try {
+    await client.connect();
+    app.listen(process.env.PORT || 3000)
+    console.log("You successfully connected to MongoDB!");
+  } catch (err) {
+    console.log(err)
+  }
+})()
 
 app.get('/', function(req, res) {
     res.send('<h1>It is working. Go to "/users" route to fetch users</h1>') 
@@ -28,15 +31,13 @@ app.get('/', function(req, res) {
 
 app.get('/users', async(req, res) => {
     try {
-      // Send a ping to confirm a successful connection
-      const database = client.db("cyclic_users") // .command({ ping: 1 });
+      const database = client.db("cyclic_users") 
       const collection = database.collection('users')
-
       const users = await collection.find().toArray()
       res.json(users)
-    } finally {
-      // Ensures that the client will close when you finish/error
-      await client.close();
+    
+    } catch(err) {
+      console.log(err)
     }
 })
 
