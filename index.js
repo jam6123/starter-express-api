@@ -9,7 +9,7 @@ const users = [
 
 app.use(express.static('public'))
 
-app.use('/', function(req, res) {
+app.get('/', function(req, res) {
     res.send('<h1>It is working. Go to "/users" route to fetch users</h1>') 
 })
 
